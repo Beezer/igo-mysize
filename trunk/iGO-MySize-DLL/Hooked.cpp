@@ -58,7 +58,7 @@ BOOL	WINAPI MyBitBlt(
 
 		if (xd > 0 && yd > 0) {
 
-			SetStretchBltMode(hdcDest, HALFTONE);
+			SetStretchBltMode(hdcDest, COLORONCOLOR);
 				return ::StretchBlt(
 					hdcDest, 
 					int(((float)nXDest / 100) * xd), 
