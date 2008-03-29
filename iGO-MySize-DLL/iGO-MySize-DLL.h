@@ -44,6 +44,9 @@ void * FindFunction(LPCSTR lpName);
 THREADSPY_API int fnThreadSpy(void);
 
 static HHOOK hhook;
+static HWND hwnd;
+static float xd = 0;
+static float yd = 0;
 
 
 

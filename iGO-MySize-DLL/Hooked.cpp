@@ -42,14 +42,19 @@ BOOL	WINAPI MyBitBlt(
 { 
 
 	// Find our window so we can retrieve our scaling factor
-	// (have to find a more efficient means of doing this)
-	HWND hwnd = FindWindow("iGO8.class", "iGO8");
-	if (hwnd) {
-		LONG userData = GetWindowLong(hwnd, GWL_USERDATA);
+	if (!hwnd) {
+		hwnd = FindWindow("iGO8.class", "iGO8");
+		//MessageBox(NULL, "FOUND HWND", "None", 0);
+	}
 
-		// Original Sizes
-		float xd = LOWORD(userData);
-		float yd = HIWORD(userData);
+	if (hwnd) {
+		if (!xd && !yd) {
+			LONG userData = GetWindowLong(hwnd, GWL_USERDATA);
+
+			 // Original Sizes
+			 xd = LOWORD(userData);
+			 yd = HIWORD(userData);
+		}
 
 		if (xd > 0 && yd > 0) {
 
@@ -83,10 +88,7 @@ LRESULT WINAPI MessageProc(int nCode, WPARAM wParam, LPARAM lParam)
 { 
     static int c = 0; 
 	WORD x, y, newY, newX;
-	float yd, xd;
-	HWND hwnd;
 	LONG userData;
-
 
 	MSG* pData=reinterpret_cast<MSG*>(lParam);
 
@@ -94,16 +96,6 @@ LRESULT WINAPI MessageProc(int nCode, WPARAM wParam, LPARAM lParam)
     { 
 
 		case WM_LBUTTONDOWN:
-
-			//Find our window
-			 hwnd = FindWindow("iGO8.class", "iGO8");
-			if (hwnd) {
-				userData = GetWindowLong(hwnd, GWL_USERDATA);
-
-				// Original Sizes
-				xd = LOWORD(userData);
-				yd = HIWORD(userData);
-
 				if (xd > 0 && yd > 0) {
 					// Scale the coords
 					x = LOWORD(pData->lParam);
@@ -115,8 +107,6 @@ LRESULT WINAPI MessageProc(int nCode, WPARAM wParam, LPARAM lParam)
 
 					pData->lParam = MAKELONG(newX,newY);
 				}
-			}
-
 			break;
 
 			/*
