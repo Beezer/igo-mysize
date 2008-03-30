@@ -44,7 +44,6 @@ BOOL	WINAPI MyBitBlt(
 	// Find our window so we can retrieve our scaling factor
 	if (!hwnd) {
 		hwnd = FindWindow("iGO8.class", "iGO8");
-		//MessageBox(NULL, "FOUND HWND", "None", 0);
 	}
 
 	if (hwnd) {
@@ -59,7 +58,7 @@ BOOL	WINAPI MyBitBlt(
 		if (xd > 0 && yd > 0) {
 
 			SetStretchBltMode(hdcDest, COLORONCOLOR);
-				return ::StretchBlt(
+			return ::StretchBlt(
 					hdcDest, 
 					int(((float)nXDest / 100) * xd), 
 					int(((float)nYDest / 100) * yd), 
@@ -86,17 +85,18 @@ BOOL	WINAPI MyBitBlt(
 
 LRESULT WINAPI MessageProc(int nCode, WPARAM wParam, LPARAM lParam) 
 { 
-    static int c = 0; 
 	WORD x, y, newY, newX;
-	LONG userData;
 
 	MSG* pData=reinterpret_cast<MSG*>(lParam);
-
-	switch (pData->message) 
+	switch (pData->message)
     { 
 
+		// Capture & manipulate mouse events
+		case WM_MOUSEMOVE:
+		case WM_LBUTTONUP:
 		case WM_LBUTTONDOWN:
 				if (xd > 0 && yd > 0) {
+					
 					// Scale the coords
 					x = LOWORD(pData->lParam);
 					y = HIWORD(pData->lParam);
@@ -107,18 +107,7 @@ LRESULT WINAPI MessageProc(int nCode, WPARAM wParam, LPARAM lParam)
 
 					pData->lParam = MAKELONG(newX,newY);
 				}
-			break;
-
-			/*
-        case WM_ACTIVATE:
-        case WM_KILLFOCUS: 
-		case WM_CAPTURECHANGED:
-		case WM_ACTIVATEAPP:
-		case WM_USER:
-			//pData->message = WM_NULL;
-			break;
-			*/
- 
+			break; 
 	}
 
 
