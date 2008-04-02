@@ -25,8 +25,6 @@ FARPROC WINAPI MyGetProcAddress(HMODULE hModule, LPCSTR lpProcName)
 	return pfn;
 }
 
-
-
 BOOL	WINAPI MyBitBlt(
   HDC hdcDest, // handle to destination DC
   int nXDest,  // x-coord of destination upper-left corner
@@ -57,7 +55,11 @@ BOOL	WINAPI MyBitBlt(
 
 		if (xd > 0 && yd > 0) {
 
+#ifdef FASTRESIZE
 			SetStretchBltMode(hdcDest, COLORONCOLOR);
+#else
+			SetStretchBltMode(hdcDest, HALFTONE);
+#endif
 			return ::StretchBlt(
 					hdcDest, 
 					int(((float)nXDest / 100) * xd), 
