@@ -1,3 +1,4 @@
+#include "mmsystem.h"
 
 // The following ifdef block is the standard way of creating macros which make exporting 
 // from a DLL simpler. All files within this DLL are compiled with the THREADSPY_EXPORTS
@@ -15,7 +16,6 @@
 WINBASEAPI FARPROC WINAPI MyGetProcAddress(HMODULE hModule, LPCSTR lpProcName);
 WINGDIAPI  BOOL    WINAPI MyBitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, HDC hdcSrc, int nXSrc,  int nYSrc,  DWORD dwRop );
 LRESULT WINAPI MessageProc(int nCode, WPARAM wParam, LPARAM lParam);
-
 
 typedef enum
 {
@@ -45,6 +45,7 @@ THREADSPY_API int fnThreadSpy(void);
 
 static HHOOK hhook;
 static HWND hwnd;
+static HWND fehwnd;
 static float xd = 0;
 static float yd = 0;
 

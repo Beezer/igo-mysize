@@ -22,7 +22,6 @@ HANDLE				hCurrentHandle;
 
 HINSTANCE hInst;
 UINT UWM_MOUSEMOVE;
-HHOOK hook;
 
 BOOL APIENTRY DllMain( HANDLE hModule, 
                        DWORD  ul_reason_for_call, 
@@ -33,7 +32,6 @@ BOOL APIENTRY DllMain( HANDLE hModule,
     switch (ul_reason_for_call)
 	{
 		case DLL_PROCESS_ATTACH:
-			//MessageBox(NULL, "Spying DLL is started", "None", 0);
 			InitializeCriticalSection(&mhSection);
 			hCurrentHandle = hModule;
 			// Now hook the functions
@@ -57,7 +55,6 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 		case DLL_THREAD_DETACH:
 			break;
 		case DLL_PROCESS_DETACH:
-			//MessageBox(NULL, "Spying DLL is leaving", "None", 0);
 			UnhookFunctions(HookedFunctions, HookedFunctionSize);
 
 			DeleteCriticalSection(&mhSection);
