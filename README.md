@@ -27,22 +27,3 @@ Each of QUALITY or SPEED also contain 3 folders. ANY, SSE and SSE2. These contai
 # Geeky Stuff
 
 This solution consists of 2 programs. A loader and a dll. The loader causes the dll to be injected into iGO hooking the BitBlt function of GDI & overwrites it with a custom function that uses StretchBlt to resize the window. The loader also hooks the WM\_LBUTTONDOWN,  WM\_LBUTTONUP and WM\_MOUSEMOVE messages & resizes the coordinates approprately. Lastly, the loader populates the private data area of the iGO window with the scale factor. The loader then quits & iGO continues on its own, using the overloaded dll.
-
-# Changelog
-
-## Beta 1
-Added optional DLL's for QUALITY and SPEED, each of which comes in a ANY, SSE and SSE2 flavour. I hope to get feedback on if these different CPU compiled versions even make any difference to speed. If not, I'll just distribute ANY in future.
-
-## Alpha 4
-Discovered that I compiled the DLL with SSE2 optimizations, which meant that it wouldn't work on Pentium 3. I've recompiled with neither SSE nor SSE2 optimizations as standard.
-
-Also, caught more mouse events which mean that the button presses work much better now.
-
-## Alpha 3
-Improved BitBlt hook by changing the stretch mode from HALFTONE to COLORONCOLOR. Seems to halve CPU when the window size is large \o/
-
-## Alpha 2
-Improved hook code for Mouse and BitBlt. Alpha1 found the iGO window and retrieved our private data for every single call, now it only does it once & stores it locally in a static. Should be much more efficient.
-
-## Alpha 1
-First release.
